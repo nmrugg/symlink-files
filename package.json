@@ -1,0 +1,12 @@
+{
+  "name": "symlink-files",
+  "description": "Symlink files (keeping the directory structure) during your build.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Nathan Rugg",
+    "email": "nmrugg@gmail.com"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "readmeFilename": "readme.md"
+}
