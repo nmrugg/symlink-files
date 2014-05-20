@@ -19,9 +19,11 @@ Works with `gulp`.
 ```js
 gulp.task("link", function ()
 {
-    symlink_files("./client/**/*.!(js|html|css)", "./client", "./build");
+    return symlink_files("./client/**/*.!(js|html|css)", "./client", "./build");
 });
 ```
+
+NOTE: It returns a Promise.
 
 ## Parameters
 symlink_files(glob, client_path, build_path, [options])
