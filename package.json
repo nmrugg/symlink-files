@@ -1,7 +1,7 @@
 {
   "name": "symlink-files",
   "description": "Symlink files (keeping the directory structure) during your build.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "Nathan Rugg",
     "email": "nmrugg@gmail.com"

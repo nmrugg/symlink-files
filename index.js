@@ -9,19 +9,26 @@ function symlink(file, src, dest, options, cb)
     var out_path = p.join(dest, p.relative(src, file)),
         origin;
     
-    if (options.rel) {
-        origin = p.relative(out_path, file)
-    } else {
-        origin = p.resolve(file);
-    }
-    
-    mkdirp(p.dirname(out_path), function (err)
+    fs.stat(file, function onstat(err, stats)
     {
-        if (err) {
-            throw err;
+        if (err || stats.isDirectory()) {
+            return cb();
         }
         
-        fs.symlink(origin, out_path, cb);
+        if (options.rel) {
+            origin = p.relative(out_path, file)
+        } else {
+            origin = p.resolve(file);
+        }
+        
+        mkdirp(p.dirname(out_path), function (err)
+        {
+            if (err) {
+                throw err;
+            }
+            
+            fs.symlink(origin, out_path, cb);
+        });
     });
 }
 
