@@ -1,7 +1,11 @@
+// jshint bitwise:true, curly:true, eqeqeq:true, forin:true, immed:true, latedef:true, newcap:true, noarg:true, noempty:true, nonew:true, onevar:true, plusplus:true, quotmark:double, strict:true, undef:true, unused:strict, node:true
+
+"use strict";
+
 var glob = require("glob"),
     p = require("path"),
     girdle = require("girdle"),
-    mkdirp  = require("mkdirp"),
+    mkdirp = require("mkdirp"),
     fs = require("fs");
 
 function symlink(file, src, dest, options, cb)
@@ -32,16 +36,16 @@ function symlink(file, src, dest, options, cb)
     });
 }
 
-module.exports = function (src_glob, src, dest, options)
+module.exports = function (src_glob, src, dest, options, cb)
 {
-    var Q = require("q"),
-        deferred;
+    if (typeof options === "function") {
+        cb = options;
+        options = null;
+    }
     
     if (!options) {
         options = {};
     }
-    
-    deferred = Q.defer();
     
     glob(src_glob, function onglob(err, files)
     {
@@ -49,11 +53,9 @@ module.exports = function (src_glob, src, dest, options)
             throw err;
         }
         
-        girdle.async_loop(files, deferred.resolve, function oneach(file, next)
+        girdle.async_loop(files, cb, function oneach(file, next)
         {
             symlink(file, src, dest, options, next);
         });
     });
-    
-    return deferred.promise;
 };
